@@ -1,18 +1,19 @@
 @extends('layouts.panel')
 
 @section('content')
-  <div class="card shadow">
-    <div class="card-header border-0">
-      <div class="row align-items-center">
-        <div class="col">
-          <h3 class="mb-0">Reporte: Frecuencia de citas</h3>
-        </div>
+<div class="card shadow">
+  <div class="card-header border-0">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="mb-0">Reporte: Frecuencia de citas</h3>
       </div>
     </div>
-    <div class="card-body">
-      <div id="container"></div>
-    </div>
   </div>
+
+  <div class="card-body">
+    <div id="container"></div>
+  </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -44,7 +45,7 @@
             }
         },
         series: [{
-            name: 'Citas registradas',
+            name: 'Citas Registradas',
             data: @json($counts)
         }]
     });

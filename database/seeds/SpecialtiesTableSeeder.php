@@ -15,21 +15,20 @@ class SpecialtiesTableSeeder extends Seeder
     public function run()
     {
     	$specialties = [
-    		'Oftalmología',
-    		'Pediatría',
-    		'Neurología'
-    	];
-    	foreach ($specialties as $specialtyName) {
-    		$specialty = Specialty::create([
-	        	'name' => $specialtyName
-	        ]);
+        		'Oftalmología',
+        		'Pediatría',
+        		'Neurología'
+        ];
+        foreach ($specialties as $specialtyName) {
+        	$Specialty =  Specialty::create([
+        		'name' => $specialtyName
+        	]);
 
-            $specialty->users()->saveMany(
+            $Specialty->users()->saveMany(
                 factory(User::class, 3)->states('doctor')->make()
             );
-    	}
+        }
 
-        // Médico Test
-        User::find(3)->specialties()->save($specialty);        
+        User::find(3)->specialties()->save($Specialty);
     }
 }

@@ -9,15 +9,9 @@ use App\Specialty;
 
 class SpecialtyController extends Controller
 {
-	public function index()
+    public function doctors(specialty $specialty)
     {
-    	return Specialty::all(['id', 'name']);
-    }
-
-    public function doctors(Specialty $specialty)
-    {
-    	return $specialty->users()->get([
-    		'users.id', 'users.name'
+    	return $specialty->users()->get(['users.id', 'users.name'
     	]);
     }
 }

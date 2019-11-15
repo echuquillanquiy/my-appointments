@@ -1,4 +1,5 @@
 <div class="table-responsive">
+  <!-- Projects table -->
   <table class="table align-items-center table-flush">
     <thead class="thead-light">
       <tr>
@@ -12,22 +13,20 @@
     <tbody>
       @foreach ($oldAppointments as $appointment)
       <tr>
-        <th scope="row">
-          {{ $appointment->specialty->name }}
+        <td>
+          {{ $appointment->specialty->name}}
         </td>
         <td>
-          {{ $appointment->scheduled_date }}
+          {{ $appointment->scheduled_date}}
         </td>
         <td>
-          {{ $appointment->scheduled_time_12 }}
+          {{ $appointment->scheduled_time_12}}
         </td>
         <td>
-          {{ $appointment->status }}
+          {{ $appointment->status}}
         </td>
         <td>
-          <a href="{{ url('/appointments/'.$appointment->id) }}" class="btn btn-primary btn-sm">
-            Ver
-          </a>
+          <a href="{{ url('/appointments/'.$appointment->id) }}" class="btn btn-primary btn-sm">Ver</a>
         </td>
       </tr>
       @endforeach

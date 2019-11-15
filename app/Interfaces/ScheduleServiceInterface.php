@@ -2,8 +2,9 @@
 
 use Carbon\Carbon;
 
-interface ScheduleServiceInterface 
+interface ScheduleServiceInterface
 {
 	public function isAvailableInterval($date, $doctorId, Carbon $start);
 	public function getAvailableIntervals($date, $doctorId);
+
 }

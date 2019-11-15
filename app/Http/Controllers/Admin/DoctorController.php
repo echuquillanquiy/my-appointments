@@ -29,7 +29,7 @@ class DoctorController extends Controller
     public function create()
     {
         $specialties = Specialty::all();
-        return view('doctors.create', compact('specialties'));
+         return view('doctors.create', compact('specialties'));
     }
 
     /**
@@ -40,7 +40,7 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        //dd($request->all());
         $rules = [
             'name' => 'required|min:3',
             'email' => 'required|email',
@@ -50,8 +50,7 @@ class DoctorController extends Controller
         ];
         $this->validate($request, $rules);
 
-        $user = User::create(
-            $request->only('name', 'email', 'dni', 'address', 'phone')
+        $user = User::create($request->only('name', 'email', 'dni', 'address', 'phone') 
             + [
                 'role' => 'doctor',
                 'password' => bcrypt($request->input('password'))
@@ -85,9 +84,8 @@ class DoctorController extends Controller
     {
         $doctor = User::doctors()->findOrFail($id);
         $specialties = Specialty::all();
-
         $specialty_ids = $doctor->specialties()->pluck('specialties.id');
-        return view('doctors.edit', compact('doctor', 'specialties', 'specialty_ids'));
+        return view('doctors.edit', compact('doctor','specialties','specialty_ids'));
     }
 
     /**
@@ -109,14 +107,14 @@ class DoctorController extends Controller
         $this->validate($request, $rules);
 
         $user = User::doctors()->findOrFail($id);
-
+        
         $data = $request->only('name', 'email', 'dni', 'address', 'phone');
         $password = $request->input('password');
-        if ($password)
-            $data['password'] = bcrypt($password);
-
+        if ($password)         
+            $data ['password'] = bcrypt($password);
+        
         $user->fill($data);
-        $user->save(); // UPDATE
+        $user->save();//UPDATE
 
         $user->specialties()->sync($request->input('specialties'));
 

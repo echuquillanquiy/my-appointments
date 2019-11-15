@@ -10,7 +10,7 @@
 </li>
 <li class="nav-item">
   <a class="nav-link" href="/doctors">
-    <i class="ni ni-single-02 text-red"></i> Médicos
+    <i class="ni ni-single-02 text-orange"></i> Médicos
   </a>
 </li>
 <li class="nav-item">
@@ -20,6 +20,6 @@
 </li>
 <li class="nav-item">
   <a class="nav-link" href="/appointments">
-    <i class="ni ni-time-alarm text-primary"></i> Citas médicas
+    <i class="ni ni-time-alarm text-primary"></i>Citas médicas
   </a>
 </li>

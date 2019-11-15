@@ -1,4 +1,5 @@
 <div class="table-responsive">
+  <!-- Projects table -->
   <table class="table align-items-center table-flush">
     <thead class="thead-light">
       <tr>
@@ -8,7 +9,7 @@
           <th scope="col">Médico</th>
         @elseif ($role == 'doctor')
           <th scope="col">Paciente</th>
-        @endif
+        @endif   
         <th scope="col">Fecha</th>
         <th scope="col">Hora</th>
         <th scope="col">Tipo</th>
@@ -22,51 +23,49 @@
           {{ $appointment->description }}
         </th>
         <td>
-          {{ $appointment->specialty->name }}
+          {{ $appointment->specialty->name}}
         </td>
         @if ($role == 'patient')
-          <td>{{ $appointment->doctor->name }}</td>
+          <td>
+            {{ $appointment->doctor->name}}
+          </td>
         @elseif ($role == 'doctor')
-          <td>{{ $appointment->patient->name }}</td>
+          <td>
+            {{ $appointment->patient->name}}
+          </td>
         @endif
         <td>
-          {{ $appointment->scheduled_date }}
+          {{ $appointment->scheduled_date}}
         </td>
         <td>
-          {{ $appointment->scheduled_time_12 }}
+          {{ $appointment->scheduled_time_12}}
         </td>
         <td>
-          {{ $appointment->type }}
+          {{ $appointment->type}}
         </td>
         <td>
           @if ($role == 'admin')
-            <a class="btn btn-sm btn-primary" title="Ver cita" 
-              href="{{ url('/appointments/'.$appointment->id) }}">
-                Ver
+            <a class="btn btn-sm btn-primary" title="Ver cita" href="{{ url('/appointments/'. $appointment->id) }}">
+              Ver
             </a>
-          @endif
+          @endif 
 
           @if ($role == 'doctor' || $role == 'admin')
-            <form action="{{ url('/appointments/'.$appointment->id.'/confirm') }}"
-              method="POST" class="d-inline-block">
+            <form action="{{ url('/appointments/'.$appointment->id. '/confirm') }}" method="POST" class="d-inline-block">
+              @csrf
+              <button class="btn btn-sm btn-success" type="submit" data-toggle="tooltip" title="Confirmar cita"><i class="ni ni-check-bold"></i></button>
+            </form>
+            <a href="{{ url('/appointments/'.$appointment->id. '/cancel') }}" class="btn btn-sm btn-danger">
+              <i class="ni ni-fat-remove"></i>
+            </a>
+          @else
+            <form action="{{ url('/appointments/'.$appointment->id. '/cancel') }}" method="POST" class="d-inline-block">
               @csrf
 
-              <button class="btn btn-sm btn-success" type="submit" 
-                data-toggle="tooltip" title="Confirmar cita">
-                <i class="ni ni-check-bold"></i>
-              </button>
+              <button class="btn btn-sm btn-danger" type="submit"><i class="ni ni-fat-remove" data-toggle="tooltip" title="Cancelar cita"></i></button>
             </form>
           @endif
           
-          <form action="{{ url('/appointments/'.$appointment->id.'/cancel') }}" 
-            method="POST" class="d-inline-block">
-            @csrf
-
-            <button class="btn btn-sm btn-danger" type="submit" 
-              data-toggle="tooltip" title="Cancelar cita">
-              <i class="ni ni-fat-delete"></i>
-            </button>
-          </form>          
         </td>
       </tr>
       @endforeach

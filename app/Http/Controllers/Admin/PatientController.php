@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use Illuminate\Http\Request;
 use App\User;
-
 use App\Http\Controllers\Controller;
-
 class PatientController extends Controller
 {
     /**
@@ -27,7 +26,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        return view('patients.create');
+         return view('patients.create');
     }
 
     /**
@@ -47,8 +46,7 @@ class PatientController extends Controller
         ];
         $this->validate($request, $rules);
 
-        User::create(
-            $request->only('name', 'email', 'dni', 'address', 'phone')
+        User::create($request->only('name', 'email', 'dni', 'address', 'phone') 
             + [
                 'role' => 'patient',
                 'password' => bcrypt($request->input('password'))
@@ -70,9 +68,15 @@ class PatientController extends Controller
         //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit(User $patient)
     {
-        return view('patients.edit', compact('patient'));        
+        return view('patients.edit', compact('patient'));
     }
 
     /**
@@ -94,25 +98,31 @@ class PatientController extends Controller
         $this->validate($request, $rules);
 
         $user = User::patients()->findOrFail($id);
-
+        
         $data = $request->only('name', 'email', 'dni', 'address', 'phone');
         $password = $request->input('password');
-        if ($password)
-            $data['password'] = bcrypt($password);
-
+        if ($password)         
+            $data ['password'] = bcrypt($password);
+        
         $user->fill($data);
-        $user->save(); // UPDATE
+        $user->save();//UPDATE
 
         $notification = 'La información del paciente se ha actualizado correctamente.';
         return redirect('/patients')->with(compact('notification'));
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(User $patient)
     {
         $patientName = $patient->name;
         $patient->delete();
 
-        $notification = "El paciente $patientName se ha eliminado correctamente.";
+        $notification = "El médico $patientName se ha eliminado correctamente.";
         return redirect('/patients')->with(compact('notification'));
     }
 }

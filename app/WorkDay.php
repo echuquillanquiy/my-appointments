@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class WorkDay extends Model
 {
     protected $fillable = [
-        'day',
-        'active',
-        
-        'morning_start',
-        'morning_end',
+    	'day',
+    	'active',
 
-        'afternoon_start',
-        'afternoon_end',
+    	'morning_start',
+    	'morning_end',
 
-        'user_id'
+    	'afternoon_start',
+    	'afternoon_end',
+
+    	'user_id'
     ];
 }

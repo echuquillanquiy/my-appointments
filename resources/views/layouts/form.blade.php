@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>{{ config('app.name') }} | @yield('title')</title>
+  <title>{{ CONFIG('app.name') }} | @yield('title')</title>
   <!-- Favicon -->
   <link href="{{ asset('img/brand/favicon.png') }}" rel="icon" type="image/png">
   <!-- Fonts -->
@@ -15,7 +15,7 @@
   <link href="{{ asset('vendor/nucleo/css/nucleo.css') }}" rel="stylesheet">
   <link href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
   <!-- Argon CSS -->
-  <link href="{{ asset('css/argon.css?v=1.0.0') }}" rel="stylesheet">
+  <link type="text/css" href="{{ asset('css/argon.css?v=1.0.0') }}" rel="stylesheet">
 </head>
 
 <body class="bg-default">
@@ -71,7 +71,7 @@
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
               <h1 class="text-white">
-              @yield('title', 'Welcome!')
+                @yield('title','Welcome')
               </h1>
               <p class="text-lead text-light">
                 @yield('subtitle')
@@ -88,6 +88,7 @@
     </div>
     <!-- Page content -->
     @yield('content')
+    
   </div>
   <!-- Footer -->
   <footer class="py-5">
@@ -95,7 +96,7 @@
       <div class="row align-items-center justify-content-xl-between">
         <div class="col-xl-6">
           <div class="copyright text-center text-xl-left text-muted">
-            &copy; 2018 <a href="/" class="font-weight-bold ml-1">{{ config('app.name') }}</a>
+            &copy; 2019 <a href="/" class="font-weight-bold ml-1" target="_blank">{{ config('app.name') }}</a>
           </div>
         </div>
         <div class="col-xl-6">
@@ -104,7 +105,7 @@
               <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Template</a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" target="_blank">Acerca de</a>
+              <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">Acerca de</a>
             </li>
           </ul>
         </div>
