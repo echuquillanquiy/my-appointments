@@ -16,4 +16,8 @@ Route::middleware('auth:api')->group(function () {
 
 	Route::post('/logout', 'AuthController@logout');
 
+	//appointments
+	Route::post('/appointments', 'AppointmentController@store');
+	Route::get('/appointments', 'AppointmentController@index');
+
 });

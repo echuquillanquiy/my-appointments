@@ -37,7 +37,8 @@ const noHoursAlert = `<div class="alert alert-danger" role="alert"><strong>Lo se
     }
 
     function displayHours(data) {
-      if (!data.morning && !data.afternoon) {
+      if (!data.morning && !data.afternoon || 
+        data.morning.length===0 && data.afternoon.length===0) {
         $hours.html(noHoursAlert);
         return;
       }
