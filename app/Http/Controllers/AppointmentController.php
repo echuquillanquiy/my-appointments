@@ -9,6 +9,9 @@ use App\Appointment;
 use App\CancelledAppointment;
 use Carbon\Carbon;
 use App\Interfaces\ScheduleServiceInterface;
+
+use App\Http\Requests\StoreAppointment;
+
 use Validator;
 
 
@@ -27,27 +30,27 @@ class AppointmentController extends Controller
             $oldAppointments = Appointment::whereIn('status', ['Atendida' ,'Cancelada'])->paginate(10);
         } elseif ($role == 'doctor') {
             $pendingAppointments = Appointment::where('status','Reservada')
-                ->where('doctor_id', auth()->id())
-                ->paginate(10);
+            ->where('doctor_id', auth()->id())
+            ->paginate(10);
             $confirmedAppointments = Appointment::where('status', 'Confirmada')
-                ->where('doctor_id', auth()->id())
-                ->paginate(10);
+            ->where('doctor_id', auth()->id())
+            ->paginate(10);
 
             $oldAppointments = Appointment::whereIn('status', ['Atendida' ,'Cancelada'])
-                ->where('doctor_id', auth()->id())
-                ->paginate(10);
+            ->where('doctor_id', auth()->id())
+            ->paginate(10);
 
         } elseif ($role == 'patient') {
             $pendingAppointments = Appointment::where('status','Reservada')
-                ->where('patient_id', auth()->id())
-                ->paginate(10);
+            ->where('patient_id', auth()->id())
+            ->paginate(10);
             $confirmedAppointments = Appointment::where('status', 'Confirmada')
-                ->where('patient_id', auth()->id())
-                ->paginate(10);
+            ->where('patient_id', auth()->id())
+            ->paginate(10);
 
             $oldAppointments = Appointment::whereIn('status', ['Atendida' ,'Cancelada'])
-                ->where('patient_id', auth()->id())
-                ->paginate(10);
+            ->where('patient_id', auth()->id())
+            ->paginate(10);
         }
 
 
@@ -82,61 +85,18 @@ class AppointmentController extends Controller
         return view('appointments.create', compact('specialties', 'doctors', 'intervals'));
     }
 
-    public function store(Request $request, ScheduleServiceInterface $scheduleService)
+    public function store(StoreAppointment $request)
     {
-        $rules = [
-            'description' => 'required',
-            'specialty_id' => 'exists:specialties,id',
-            'doctor_id' => 'exists:users,id',
-            'scheduled_time' => 'required'
-        ];
+       $created = Appointment::createForPatient($request, auth()->id());
 
-        $messages = [
-            'scheduled_time.required' => 'Por favor seleccione una hora válida para su cita.'
-        ];
+        if ($created) 
+            $notification = 'La cita se ha registrado correctamente';
+        else
+            $notification = 'Ocurrió un problema al registrar la cita médica';  
+       
 
-    	$validator = Validator::make($request->all(), $rules, $messages);
-
-        $validator->after(function ($validator) use ( $request, $scheduleService) {
-            $date = $request->input('scheduled_date');
-            $doctorId = $request->input('doctor_id');
-            $scheduled_time = $request->input('scheduled_time');
-            if ($date && $doctorId && $scheduled_time) {
-                $start = new Carbon($scheduled_time);
-            } else {
-                return;
-            }
-
-            if (!$scheduleService->isAvailableInterval($date, $doctorId, $start)) {
-                $validator->errors()
-                    ->add('available_time','La hora seleccionada ya se encuentra reservada por otro paciente.');
-            }
-        });
-
-        if ($validator->fails()) {
-            return back()
-                    ->withErrors($validator)
-                    ->withInput();
-        }
-
-        $data = $request->only([
-    		'description',
-		    'specialty_id',
-		    'doctor_id',
-		    'patient_id',
-		    'scheduled_date',
-		    'scheduled_time',
-		    'type'
-    	]);
-        $data['patient_id'] = auth()->id();
-
-        $carbonTime = Carbon::createFromFormat('g:i A', $data['scheduled_time']);
-        $data['scheduled_time'] = $carbonTime->format('H:i:s');
-
-    	Appointment::create($data);
-
-    	$notification = 'La cita se ha registrado correctamente';
-    	return back()->with(compact('notification'));
+       return back()->with(compact('notification'));
+        
     }
 
     public function showCancelForm(Appointment $appointment)
