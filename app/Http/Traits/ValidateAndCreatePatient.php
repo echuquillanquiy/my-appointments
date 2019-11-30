@@ -4,6 +4,8 @@ namespace App\Http\Traits;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 
+
+
 trait ValidateAndCreatePatient
 {
    protected function validator(array $data)
