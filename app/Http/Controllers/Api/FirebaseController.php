@@ -17,7 +17,7 @@ class FirebaseController extends Controller
 
     	if ($request->has('device_token')) 
     	{
-    		$user->divece_token = $request->input('device_token');
+    		$user->device_token = $request->input('device_token');
     		$user->save();
     	}
     	
