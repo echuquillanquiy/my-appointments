@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-USE Auth;
+use Auth;
 
 class FirebaseController extends Controller
 {
