@@ -55,16 +55,13 @@
               @csrf
               <button class="btn btn-sm btn-success" type="submit" data-toggle="tooltip" title="Confirmar cita"><i class="ni ni-check-bold"></i></button>
             </form>
-            <a href="{{ url('/appointments/'.$appointment->id. '/cancel') }}" class="btn btn-sm btn-danger">
-              <i class="ni ni-fat-remove"></i>
-            </a>
-          @else
+          @endif
+          
             <form action="{{ url('/appointments/'.$appointment->id. '/cancel') }}" method="POST" class="d-inline-block">
               @csrf
 
               <button class="btn btn-sm btn-danger" type="submit"><i class="ni ni-fat-remove" data-toggle="tooltip" title="Cancelar cita"></i></button>
             </form>
-          @endif
           
         </td>
       </tr>
