@@ -7,6 +7,7 @@ class SendNotifications extends Command
 {
     protected $signature = 'fcm:send';
     protected $description = 'Enviar mensajes vía FCM';
+    
     public function __construct()
     {
         parent::__construct();
