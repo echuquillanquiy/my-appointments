@@ -7,7 +7,7 @@ class SendNotifications extends Command
 {
     protected $signature = 'fcm:send';
     protected $description = 'Enviar mensajes vía FCM';
-    
+
     public function __construct()
     {
         parent::__construct();
@@ -28,12 +28,14 @@ class SendNotifications extends Command
         $headers = ['id', 'scheduled_date', 'scheduled_time', 'patient_id'];
         $appointmentsTomorrow = $this->getAppointments24Hours($now->copy());
         $this->table($headers, $appointmentsTomorrow->toArray());
+        
         foreach ($appointmentsTomorrow as $appointment) {
             $appointment->patient->sendFCM('No olvides tu cita mañana a esta hora.');
             $this->info('Mensaje FCM enviado 24h antes al paciente (ID): ' . $appointment->patient_id);
         }
         $appointmentsNextHour = $this->getAppointmentsNextHour($now->copy());
         $this->table($headers, $appointmentsNextHour->toArray());
+
         foreach ($appointmentsNextHour as $appointment) {
             $appointment->patient->sendFCM('Tienes una cita en 1 hora. Te esperamos.');
             $this->info('Mensaje FCM enviado faltando 1h al paciente (ID): ' . $appointment->patient_id);
