@@ -35,9 +35,7 @@ class SendNotifications extends Command
             $this->info('Mensaje FCM enviado 24h antes al paciente (ID): ' . $appointment->patient_id);
         }
         
-
         $appointmentsNextHour = $this->getAppointmentsNextHour($now->copy());
-        dd($appointmentsNextHour);
         $this->table($headers, $appointmentsNextHour->toArray());
 
         foreach ($appointmentsNextHour as $appointment) {
