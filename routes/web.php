@@ -52,8 +52,13 @@ Route::middleware(['auth', 'doctor'])->namespace('Doctor')->group(function (){
 });
 
 Route::middleware('auth')->group(function () {
-	Route::get('/appointments/create', 'AppointmentController@create');
-	Route::post('/appointments', 'AppointmentController@store');
+	Route::get('/profile', 'UserController@edit');
+	Route::post('/profile', 'UserController@update');
+
+	Route::middleware('phone')->group(function (){
+		Route::get('/appointments/create', 'AppointmentController@create');
+		Route::post('/appointments', 'AppointmentController@store');
+	});
 
 	Route::get('/appointments', 'AppointmentController@index');
 	Route::get('/appointments/{appointment}', 'AppointmentController@show');
@@ -62,12 +67,5 @@ Route::middleware('auth')->group(function () {
 	Route::post('/appointments/{appointment}/cancel', 'AppointmentController@postCancel');
 
 	Route::post('/appointments/{appointment}/confirm', 'AppointmentController@postConfirm');
-
-	/*
-	/patient/APPOINTMENTS
-	/doctor/APPOINTMENTS
-	/admin/APPOINTMENTS
-	*/
 });
-
 
